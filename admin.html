@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="lt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin | Kontaktai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <section class="intro">
+      <p class="label">Admin</p>
+      <h1>Gautos zinutes</h1>
+      <p class="lead">
+        Prisijunk su `ADMIN_KEY` ir paziurek paskutines zinutes is Blob saugyklos.
+      </p>
+      <div class="badge-row">
+        <span class="badge">Vercel API</span>
+        <span class="badge">Blob</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <form id="admin-form" novalidate>
+        <label for="adminKey">ADMIN_KEY</label>
+        <input id="adminKey" name="adminKey" type="password" autocomplete="current-password" required>
+
+        <div class="row">
+          <button type="submit" id="load-btn">Uzkrauti</button>
+          <button type="button" class="b2" id="logout-btn">Atsijungti</button>
+        </div>
+      </form>
+
+      <p id="status" class="status" aria-live="polite"></p>
+      <div id="list" style="display:grid;gap:10px;margin-top:12px"></div>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

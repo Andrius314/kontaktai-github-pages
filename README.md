@@ -25,6 +25,15 @@ Vercel Dashboard:
 2. Eik i `Storage` -> Blob store `kontaktai-messages-2`
 3. Matysi failus kataloge `contacts/`
 
+## Paprastesnis perziurejimas (Admin puslapis)
+
+1. Vercel projekte `kontaktai-github-pages-api` pridėk env kintamaji:
+   - `ADMIN_KEY` = ilgas slaptazodis (pvz. 32+ simboliu)
+2. Redeploy API (Vercel Dashboard -> Deployments -> Redeploy).
+3. Atidaryk:
+   - `https://andrius314.github.io/kontaktai-github-pages/admin.html`
+4. Ivesk `ADMIN_KEY` ir spausk `Uzkrauti`.
+
 ## Saugumo pastabos
 
 - `BLOB_READ_WRITE_TOKEN` laikomas tik Vercel environmente.
