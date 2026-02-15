@@ -1,0 +1,9 @@
+{
+  "name": "kontaktai-github-pages",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Kontaktu forma su Vercel API ir Blob saugykla",
+  "dependencies": {
+    "@vercel/blob": "^1.1.1"
+  }
+}

@@ -1,3 +1,6 @@
+const crypto = require("node:crypto");
+const { put } = require("@vercel/blob");
+
 function json(res, statusCode, payload) {
   res.status(statusCode).setHeader("Content-Type", "application/json");
   res.end(JSON.stringify(payload));
@@ -29,28 +32,19 @@ function isValidEmail(email) {
 }
 
 async function insertContact(payload) {
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  if (!supabaseUrl || !serviceRoleKey) {
-    throw new Error("Serverio env kintamieji nesukonfiguruoti.");
+  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    throw new Error("Serverio BLOB env kintamieji nesukonfiguruoti.");
   }
 
-  const response = await fetch(`${supabaseUrl}/rest/v1/contacts`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      apikey: serviceRoleKey,
-      Authorization: `Bearer ${serviceRoleKey}`,
-      Prefer: "return=minimal"
-    },
-    body: JSON.stringify([payload])
+  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const suffix = crypto.randomBytes(6).toString("hex");
+  const pathname = `contacts/${timestamp}-${suffix}.json`;
+
+  await put(pathname, JSON.stringify(payload), {
+    access: "public",
+    addRandomSuffix: false,
+    contentType: "application/json"
   });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Supabase insert klaida: ${errorText}`);
-  }
 }
 
 module.exports = async function handler(req, res) {
@@ -108,7 +102,8 @@ module.exports = async function handler(req, res) {
     await insertContact({
       name: name,
       email: email,
-      message: message
+      message: message,
+      createdAt: new Date().toISOString()
     });
     return json(res, 200, { ok: true });
   } catch (error) {
