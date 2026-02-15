@@ -4,10 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kontaktai</title>
+  <meta name="description" content="Kontaktu forma su saugiu siuntimu per Vercel API.">
+  <meta property="og:title" content="Kontaktai">
+  <meta property="og:description" content="Palik zinute. Duomenys saugomi per Vercel API.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 </head>
 <body>
   <main class="shell">
@@ -15,11 +21,18 @@
       <p class="label">Kontaktu forma</p>
       <h1>Susisiekime</h1>
       <p class="lead">
-        Palik savo zinute. Forma iraso duomenis i Supabase lentele, todel tinka GitHub Pages statinei svetainei.
+        Palik savo zinute. Forma siuncia duomenis i saugu Vercel API, todel tinka GitHub Pages statinei svetainei.
       </p>
       <div class="badge-row">
         <span class="badge">GitHub Pages</span>
-        <span class="badge">Supabase Free</span>
+        <span class="badge">Vercel API</span>
+        <span class="badge">Anti-spam</span>
+        <a class="badge badge-link" href="sachmatai.html">Sachmatai vs AI</a>
+      </div>
+      <div class="badge-row">
+        <a class="link" href="privacy.html">Privatumo politika</a>
+        <span class="muted">|</span>
+        <a class="link" href="admin.html">Admin</a>
       </div>
     </section>
 
@@ -27,18 +40,28 @@
       <form id="contact-form" novalidate>
         <label for="name">Vardas</label>
         <input id="name" name="name" type="text" maxlength="80" required>
+        <p class="hint" id="nameHint"></p>
 
         <label for="email">El. pastas</label>
         <input id="email" name="email" type="email" maxlength="160" required>
+        <p class="hint" id="emailHint"></p>
 
         <label for="message">Zinute</label>
         <textarea id="message" name="message" maxlength="2000" required></textarea>
+        <p class="hint" id="messageHint"></p>
 
         <input id="company" class="hp" name="company" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div id="turnstile" class="turnstile"></div>
 
         <button type="submit" id="submit-btn">Siusti</button>
       </form>
       <p id="status" class="status" aria-live="polite"></p>
+      <div id="result" class="result hidden">
+        <div class="meta">Sekme</div>
+        <div class="mono" id="resultId"></div>
+        <div class="meta" id="resultTime"></div>
+      </div>
     </section>
   </main>
 

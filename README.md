@@ -1,41 +1,46 @@
 # Kontaktai (GitHub Pages + Vercel API + Blob)
 
-Sis projektas jau sukonfiguruotas veikti saugiai:
+Sis projektas:
 - Frontend hostinamas per GitHub Pages.
-- Backend endpoint `api/contact.js` hostinamas per Vercel.
-- Zinutės saugomos Vercel Blob saugykloje.
-- Jokiu DB raktu frontende nera.
+- Backend endpointai hostinami per Vercel (serverless).
+- Irasai saugomi Vercel Blob saugykloje.
+- Irasu turinys saugomas sifruotas (AES-256-GCM), kad Blob failas be rakto butu neiskaitomas.
 
-## Naudojami URL
+## URL
 
 - Frontend: `https://andrius314.github.io/kontaktai-github-pages/`
-- API: `https://kontaktai-github-pages-api.vercel.app/api/contact`
+- Admin: `https://andrius314.github.io/kontaktai-github-pages/admin.html`
+- Privatumo puslapis: `https://andrius314.github.io/kontaktai-github-pages/privacy.html`
+- API (contact): `https://kontaktai-github-pages-api.vercel.app/api/contact`
 
-## Kaip tai veikia
+## Reikalinga konfig
 
-1. Vartotojas uzpildo forma.
-2. Frontendas siuncia `POST` i Vercel API.
-3. API validuoja laukus, tikrina origin ir honeypot.
-4. API issaugo JSON irasa Blob saugykloje (`contacts/*.json`).
+### Frontend (`config.js`)
 
-## Kur randasi irasai
+- `apiBaseUrl`: palik kaip yra (Vercel API domenas).
+- `turnstileSiteKey`: ivesk Cloudflare Turnstile site key (public).
 
-Vercel Dashboard:
-1. Atsidaryk projekta `kontaktai-github-pages-api`
-2. Eik i `Storage` -> Blob store `kontaktai-messages-2`
-3. Matysi failus kataloge `contacts/`
+### Vercel env (projekte `kontaktai-github-pages-api`)
 
-## Paprastesnis perziurejimas (Admin puslapis)
+Reikia nustatyti:
+- `ALLOWED_ORIGIN` = `https://andrius314.github.io`
+- `ADMIN_KEY` = tavo admin slaptazodis
+- `TURNSTILE_SECRET_KEY` = Cloudflare Turnstile secret key
+- `DATA_ENC_KEY` = 32 baitai base64 (sifravimo raktas)
 
-1. Vercel projekte `kontaktai-github-pages-api` pridėk env kintamaji:
-   - `ADMIN_KEY` = ilgas slaptazodis (pvz. 32+ simboliu)
-2. Redeploy API (Vercel Dashboard -> Deployments -> Redeploy).
-3. Atidaryk:
-   - `https://andrius314.github.io/kontaktai-github-pages/admin.html`
-4. Ivesk `ADMIN_KEY` ir spausk `Uzkrauti`.
+Sugeneruoti raktus:
 
-## Saugumo pastabos
+```powershell
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"   # DATA_ENC_KEY
+node -e "console.log(require('crypto').randomBytes(24).toString('base64url'))" # ADMIN_KEY (pvz.)
+```
 
-- `BLOB_READ_WRITE_TOKEN` laikomas tik Vercel environmente.
-- Frontendas neturi jokio rasymo rakto.
-- `ALLOWED_ORIGIN` riboja uzklausas is tavo GitHub Pages domeno.
+Po env pakeitimu: Vercel Dashboard -> Deployments -> Redeploy (production).
+
+## Kur pamatyti irasus
+
+1. Admin puslapis:
+   - `admin.html` leidzia ieskoti, filtruoti, zymeti perziureta ir eksportuoti i CSV/XLSX (Excel).
+2. Vercel Dashboard:
+   - projektas `kontaktai-github-pages-api` -> Storage -> Blob store -> `contacts/`
+

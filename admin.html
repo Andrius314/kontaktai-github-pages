@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Admin | Kontaktai</title>
+  <meta name="description" content="Admin perziura kontaktu zinutems.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -31,6 +33,47 @@
         <div class="row">
           <button type="submit" id="load-btn">Uzkrauti</button>
           <button type="button" class="b2" id="logout-btn">Atsijungti</button>
+          <button type="button" class="b2" id="export-csv-btn">Export CSV</button>
+          <button type="button" class="b2" id="export-xlsx-btn">Export XLSX</button>
+        </div>
+
+        <label for="q">Paieska</label>
+        <input id="q" name="q" type="search" placeholder="vardas, el. pastas, tekstas...">
+
+        <div class="row">
+          <div style="flex:1;min-width:160px">
+            <label for="from">Nuo (YYYY-MM-DD)</label>
+            <input id="from" name="from" type="date">
+          </div>
+          <div style="flex:1;min-width:160px">
+            <label for="to">Iki (YYYY-MM-DD)</label>
+            <input id="to" name="to" type="date">
+          </div>
+        </div>
+
+        <div class="row">
+          <label style="display:flex;gap:8px;align-items:center">
+            <input id="unreadOnly" type="checkbox">
+            Tik neperziuretos
+          </label>
+          <label style="display:flex;gap:8px;align-items:center">
+            <input id="autoSeen" type="checkbox" checked>
+            Pazymeti perziureta atidarius
+          </label>
+          <div style="flex:1;min-width:200px">
+            <label for="sort">Rikiavimas</label>
+            <select id="sort" name="sort">
+              <option value="new">Naujausi virsuje</option>
+              <option value="old">Seniausi virsuje</option>
+            </select>
+          </div>
+          <div style="flex:1;min-width:150px">
+            <label for="limit">Limit</label>
+            <select id="limit" name="limit">
+              <option value="20">20</option>
+              <option value="50" selected>50</option>
+            </select>
+          </div>
         </div>
       </form>
 
@@ -40,6 +83,7 @@
   </main>
 
   <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>
