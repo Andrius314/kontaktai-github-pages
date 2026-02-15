@@ -4,9 +4,15 @@ function json(res, statusCode, payload) {
 }
 
 function pickAllowedOrigin(reqOrigin) {
-  const configured = process.env.ALLOWED_ORIGIN || "";
+  const configured = String(process.env.ALLOWED_ORIGIN || "").trim();
   if (!configured) return "*";
-  return configured === reqOrigin ? configured : "";
+  const allowed = configured
+    .split(",")
+    .map(function (value) {
+      return value.trim();
+    })
+    .filter(Boolean);
+  return allowed.includes(reqOrigin) ? reqOrigin : "";
 }
 
 function setCors(res, reqOrigin) {
