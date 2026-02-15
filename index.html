@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="lt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kontaktai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <section class="intro">
+      <p class="label">Kontaktu forma</p>
+      <h1>Susisiekime</h1>
+      <p class="lead">
+        Palik savo zinute. Forma iraso duomenis i Supabase lentele, todel tinka GitHub Pages statinei svetainei.
+      </p>
+      <div class="badge-row">
+        <span class="badge">GitHub Pages</span>
+        <span class="badge">Supabase Free</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <form id="contact-form" novalidate>
+        <label for="name">Vardas</label>
+        <input id="name" name="name" type="text" maxlength="80" required>
+
+        <label for="email">El. pastas</label>
+        <input id="email" name="email" type="email" maxlength="160" required>
+
+        <label for="message">Zinute</label>
+        <textarea id="message" name="message" maxlength="2000" required></textarea>
+
+        <input id="company" class="hp" name="company" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <button type="submit" id="submit-btn">Siusti</button>
+      </form>
+      <p id="status" class="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
