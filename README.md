@@ -13,7 +13,7 @@ Sis variantas yra saugesnis uz tiesiogini jungima is frontendo i Supabase, nes:
 
 ## 1) Supabase lentele
 
-SQL Editor paleisk:
+SQL Editor paleisk failo `supabase/schema.sql` turini:
 
 ```sql
 create table if not exists public.contacts (
@@ -27,7 +27,7 @@ create table if not exists public.contacts (
 alter table public.contacts enable row level security;
 ```
 
-Pastaba: anon insert policy nebereikalinga, nes irasymas vyksta per serveri.
+Pastaba: anon insert policy nebereikalinga, nes irasymas vyksta per serveri per `service_role` rakta.
 
 ## 2) API diegimas Vercel
 
